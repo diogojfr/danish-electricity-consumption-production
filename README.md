@@ -1,0 +1,1 @@
+A data ingestion and visualization project of the Danish electricity consumption and production.
