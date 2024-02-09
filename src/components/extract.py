@@ -26,8 +26,18 @@ class DataExtraction:
             response = requests.get(url)
 
             if response.status_code == 200:
-                logging.info('Api successufully conected')
+                logging.info('Api successufully connected')
+            
+            output = response.json()
+            data = output['records']
 
+            df = pd.DataFrame(data)
+
+            df.to_csv(self.extraction_config.data_path, index=False, header=True)
+
+            logging.info('Data extraction completed.')
+
+            return self.extraction_config.data_path
 
         except Exception as e:
             raise CustomException(e,sys)
@@ -37,7 +47,3 @@ class DataExtraction:
 
 
 
-output = response.json()
-data = output['records']
-
-df = pd.DataFrame(data)
