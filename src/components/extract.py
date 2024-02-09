@@ -16,12 +16,12 @@ class DataExtraction:
     def __init__(self):
         self.extraction_config = DataExtractionConfig()
 
-    def initiate_data_extraction(self, dataset_name):
+    def initiate_data_extraction(self, dataset_name, number_days):
 
         logging.info('Entered the data extraction process...')
         
         try:
-            url = "https://api.energidataservice.dk/dataset/{}?limit=48".format(dataset_name)
+            url = "https://api.energidataservice.dk/dataset/{}?limit={}".format(dataset_name,number_days*48)
 
             response = requests.get(url)
 
@@ -42,7 +42,7 @@ class DataExtraction:
         except Exception as e:
             raise CustomException(e,sys)
 
-        dataset_name = "ProductionConsumptionSettlement"
+
 
 
 
