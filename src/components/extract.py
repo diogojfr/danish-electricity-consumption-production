@@ -3,6 +3,7 @@ import sys
 import pandas as pd
 import requests 
 import json
+from dataclasses import dataclass
 from src.exception import CustomException
 from src.logger import logging
 
