@@ -27,7 +27,7 @@ class DataExtraction:
             response = requests.get(url)
 
             if response.status_code == 200:
-                logging.info('Api successufully connected')
+                logging.info('API successfully connected.')
             
             output = response.json()
             data = output['records']
