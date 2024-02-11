@@ -2,7 +2,7 @@ import psycopg2
 import pandas as pd
 from sqlalchemy import create_engine
 
-connection_string = "postgres://lsprvksb:jf8w1w_ahrthiX2q7oNfb7nKoUnrjoXf@silly.db.elephantsql.com/lsprvksb"
+connection_string = "postgres://user:password@silly.db.elephantsql.com/user"
 conn = psycopg2.connect(connection_string)
 
 #conn.set_session(autocommit=True)
