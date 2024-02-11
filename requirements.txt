@@ -3,4 +3,5 @@ numpy
 matplotlib
 requests
 sqlalchemy
+psycopg2
 #-e .
