@@ -17,7 +17,7 @@ cur.execute(
 
 cur.execute(
   """
-  CREATE TABLE daily_historic_pollution (date DATE PRIMARY KEY,
+  CREATE TABLE danish_electricity_total (date DATE PRIMARY KEY,
                          type VARCHAR(20),
                          value INTEGER
                          )
@@ -25,33 +25,20 @@ cur.execute(
 print("Created table")
 cur.close()
 conn.close()
- 
-# try 2
-# engine = create_engine(connection_string)
-# df = pd.read_csv("C:/Users/Administrador/Documents/data-science/portifolio-projects/danish-electricity-consumption-and-production/artifacts/raw_tables/raw_data.csv")
-# df.to_sql('danish_electricity_total', con=engine)
 
-# try 3
-# up.uses_netloc.append("postgres")
-# url = up.urlparse(os.environ["postgres://lsprvksb:jf8w1w_ahrthiX2q7oNfb7nKoUnrjoXf@silly.db.elephantsql.com/lsprvksb"])
-# conn = psycopg2.connect(database = url.path[1:],
-#                         user = url.username,
-#                         password = url.password,
-#                         host = url.hostname,
-#                         port = url.port)
 df = pd.read_csv("C:/Users/Administrador/Documents/data-science/portifolio-projects/danish-electricity-consumption-and-production/artifacts/raw_tables/raw_data.csv")
-#df.to_sql('danish_electricity_total', conn)
+ 
+engine = create_engine(connection_string)
 
-db = create_engine(connection_string)
-conn = db.connect()
+for i in range(len(df)):
+    query = """ INSERT INTO danish_electricity_total (HourUTC, HourDK, PriceArea,       CentralPowerMWh, LocalPowerMWh, CommercialPowerMWh, LocalPowerSelfConMWh, OffshoreWindLt100MW_MWh, OffshoreWindGe100MW_MWh, OnshoreWindLt50kW_MWh,
+    OnshoreWindGe50kW_MWh, HydroPowerMWh, SolarPowerLt10kW_MWh,
+    SolarPowerGe10Lt40kW_MWh, SolarPowerGe40kW_MWh,
+    SolarPowerSelfConMWh, UnknownProdMWh, ExchangeNO_MWh,
+    ExchangeSE_MWh, ExchangeGE_MWh, ExchangeNL_MWh, ExchangeGB_MWh,
+    ExchangeGreatBelt_MWh, GrossConsumptionMWh,
+    GridLossTransmissionMWh, GridLossInterconnectorsMWh,
+    GridLossDistributionMWh, PowerToHeatMWh)
+    
+    """
 
-df.to_sql('danish_electricity_total', con=conn, if_exists='replace',
-          index=False)
-
-conn = psycopg2.connect(connection_string)
-conn.autocommit = True
-cursor = conn.cursor()
-query_test = '''select * from danish_electricity_total;'''
-cursor.execute(query_test)
-#for i in cursor.fetchall():
-conn.close()
