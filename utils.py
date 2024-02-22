@@ -65,5 +65,6 @@ for i in range(len(df)):
     GridLossTransmissionMWh, GridLossInterconnectorsMWh,
     GridLossDistributionMWh, PowerToHeatMWh) VALUES (%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s);
     """
-    engine.execute(query, df.HourUTC[i], df.HourDK[i], df.PriceArea[i],
-                   df.CentralPowerMWh[i], df.LocalPowerMWh[i], df.CommercialPowerMWh[i],df.LocalPowerSelfConMWh[i], )
+    engine.execute(query, (df.HourUTC[i], df.HourDK[i], df.PriceArea[i],
+                   df.CentralPowerMWh[i], df.LocalPowerMWh[i], df.CommercialPowerMWh[i],df.LocalPowerSelfConMWh[i], df.OffshoreWindLt100MW_MWh[i], df.OffshoreWindGe100MW_MWh[i], df.OnshoreWindLt50kW_MWh[i],
+                   df.OnshoreWindGe50kW_MWh[i], df.HydroPowerMWh[i], df.SolarPowerLt10kW_MWh[i],df.SolarPowerGe10Lt40kW_MWh[i], df.SolarPowerGe40kW_MWh[i],df.SolarPowerSelfConMWh[i], df.UnknownProdMWh[i], df.ExchangeNO_MWh[i], df.ExchangeSE_MWh[i], df.ExchangeGE_MWh[i], df.ExchangeNL_MWh[i], df.ExchangeGB_MWh[i], df.ExchangeGreatBelt_MWh[i], df.GrossConsumptionMWh[i], df.GridLossTransmissionMWh[i], df.GridLossInterconnectorsMWh[i], df.GridLossDistributionMWh[i], df.PowerToHeatMWh[i]))
