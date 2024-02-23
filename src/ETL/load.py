@@ -8,11 +8,11 @@ from dataclasses import dataclass
 
 @dataclass
 
-class DataLoadingConfig:
-    df_filtered_path = os.path.join('artifacts','raw_tables','df_filtered.csv')
+# class DataLoadingConfig:
+#     df_filtered_path = os.path.join('artifacts','raw_tables','df_filtered.csv')
 
 class DataLoading:
-    def __init__(self):
+    def __init__(self, user, password):
         self.loading_config = DataLoadingConfig()
 
     def initiate_data_loading(self, extraction_path):
@@ -23,14 +23,16 @@ class DataLoading:
 
             logging.info('Filtering the dataset...')
             df = df[df['PriceArea']=='DK1']
+            df = df.reset_index(drop=True)
             logging.info('Dataset filtering completed.')
 
             logging.info('Changing the columns types...')
-            df['HourDK'] = pd.to_datetime(df['HourDK'], errors='coerce')
+            #df['HourDK'] = pd.to_datetime(df['HourDK'], errors='coerce')
             df['HourUTC'] = pd.to_datetime(df['HourUTC'], errors='coerce')
             logging.info('Columns types changes completed.')
 
             logging.info('Loading the dataset into the database (elephantsql)...')
+
             logging.info('Dataset loading into the database completed.')
 
         except Exception as e:

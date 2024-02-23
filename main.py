@@ -5,6 +5,8 @@ from src.components.extract import DataExtraction
 
 dataset_name = "ProductionConsumptionSettlement"
 number_of_days = 1
+database_user = "asdas"
+database_password = ""
 
 if __name__ == "__main__":
     data_extract = DataExtraction()
