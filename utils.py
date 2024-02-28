@@ -56,8 +56,9 @@ def create_table(database_user:str, database_password:str):
         raise CustomException(sys, e)
 
 
-def loading_data(df):
+def loading_data(df, database_user, database_password):
     try:
+        connection_string = "postgres://{}:{}@silly.db.elephantsql.com/{}".format(database_user,database_password,database_user)
         conn = psycopg2.connect(connection_string)
         conn.set_session(autocommit=True)
         cur = conn.cursor()
@@ -83,8 +84,8 @@ def loading_data(df):
                                  df.GridLossInterconnectorsMWh[i], 
                                  df.GridLossDistributionMWh[i], df.PowerToHeatMWh[i]))
 
-            cur.close()
-            conn.close()
+        cur.close()
+        conn.close()
 
     except Exception as e:
         raise CustomException(sys,e)

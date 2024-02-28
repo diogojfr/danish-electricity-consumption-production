@@ -4,6 +4,8 @@ import pandas as pd
 import numpy as np
 from src.logger import logging
 from src.exception import CustomException
+from utils import create_table
+from utils import loading_data
 from dataclasses import dataclass
 
 @dataclass
@@ -12,10 +14,10 @@ from dataclasses import dataclass
 #     df_filtered_path = os.path.join('artifacts','raw_tables','df_filtered.csv')
 
 class DataLoading:
-    def __init__(self, user, password):
-        self.loading_config = DataLoadingConfig()
+    #def __init__(self, user, password):
+    #    self.loading_config = DataLoadingConfig()
 
-    def initiate_data_loading(self, extraction_path):
+    def initiate_data_loading(self, extraction_path, user, password):
         logging.info('Entered data loading process...')
         
         try:
@@ -32,13 +34,14 @@ class DataLoading:
             logging.info('Columns types changes completed.')
 
             logging.info('Loading the dataset into the database (elephantsql)...')
-
-            logging.info('Dataset loading into the database completed.')
+            create_table(user, password)
+            loading_data(df, user, password)
+            logging.info('The dataset has been loaded into the database.')
 
         except Exception as e:
             raise CustomException(sys, e)
 
          
 
-df = pd.read_csv("C:/Users/Administrador/Documents/data-science/portifolio-projects/danish-electricity-consumption-and-production/artifacts/raw_tables/raw_data.csv")
+#df = pd.read_csv("C:/Users/Administrador/Documents/data-science/portifolio-projects/danish-electricity-consumption-and-production/artifacts/raw_tables/raw_data.csv")
 
