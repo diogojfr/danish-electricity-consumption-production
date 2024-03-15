@@ -4,7 +4,6 @@ import pandas as pd
 import numpy as np
 from src.logger import logging
 from src.exception import CustomException
-from utils import create_table
 from utils import loading_data
 from dataclasses import dataclass
 
@@ -17,7 +16,7 @@ class DataLoading:
     #def __init__(self, user, password):
     #    self.loading_config = DataLoadingConfig()
 
-    def initiate_data_loading(self, extraction_path, user, password):
+    def initiate_data_loading(self, extraction_path, hostname, database, username, pwd, port_id):
         logging.info('Entered data loading process...')
         
         try:
@@ -33,9 +32,8 @@ class DataLoading:
             df['HourUTC'] = pd.to_datetime(df['HourUTC'], errors='coerce')
             logging.info('Columns types changes completed.')
 
-            logging.info('Loading the dataset into the database (elephantsql)...')
-            create_table(user, password)
-            loading_data(df, user, password)
+            logging.info('Loading the dataset into the database...')
+            loading_data(hostname, database, username, pwd, port_id, df)
             logging.info('The dataset has been loaded into the database.')
 
         except Exception as e:
