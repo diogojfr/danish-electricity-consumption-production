@@ -1,0 +1,31 @@
+version: 2
+
+sources:
+  - name: data_source
+    database: danish_energy
+    schema: data_source
+    tables:
+      - name: danish_electricity_total
+ 
+
+models:
+  - name: ac_total_table.sql
+    description: "creating a cleaned table with all the data from the original dataset"
+    columns:
+      - name: date_time
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null 
+
+  - name: ac_energy_production.sql
+    description: "creating a table with the generation data"
+    columns:
+      - name: date_time
+        description: "The primary key for this table"    
+
+  - name: ac_exchange_energy.sql
+    description: "creating a table with the exchange data between Denmark and other countries"
+    columns:
+      - name: date_time
+        description: "The primary key for this table"  

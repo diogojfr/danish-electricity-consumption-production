@@ -2,12 +2,11 @@ import psycopg2
 import psycopg2.extras
 import sys
 import os
-import pandas as pd
 from src.exception import CustomException
 from src.logger import logging
 
 def loading_data(hostname, database, username, pwd, port_id, df):
-    cur = None
+    conn = None
     try:
          with psycopg2.connect(
              host = hostname,
@@ -20,12 +19,22 @@ def loading_data(hostname, database, username, pwd, port_id, df):
 
                 cur.execute(
                     """
-                    DROP TABLE IF EXISTS danish_electricity_total
+                    CREATE SCHEMA IF NOT EXISTS data_source
                     """)
                 
                 cur.execute(
                     """
-                    CREATE TABLE danish_electricity_total(HourUTC TIMESTAMP PRIMARY KEY,
+                    CREATE SCHEMA IF NOT EXISTS transformations
+                    """)
+                
+                cur.execute(
+                    """
+                    DROP TABLE IF EXISTS data_source.danish_electricity_total
+                    """)
+                
+                cur.execute(
+                    """
+                    CREATE TABLE data_source.danish_electricity_total(HourUTC TIMESTAMP PRIMARY KEY,
                                             PriceArea VARCHAR(10),
                                             CentralPowerMWh FLOAT(2), 
                                             LocalPowerMWh FLOAT(2), 
@@ -54,7 +63,7 @@ def loading_data(hostname, database, username, pwd, port_id, df):
                                             PowerToHeatMWh FLOAT(2));""")
                 
                 for i in range(len(df)):
-                    querys = """INSERT INTO danish_electricity_total(HourUTC, PriceArea, CentralPowerMWh, LocalPowerMWh, 
+                    querys = """INSERT INTO data_source.danish_electricity_total(HourUTC, PriceArea, CentralPowerMWh, LocalPowerMWh, 
                                                         CommercialPowerMWh, LocalPowerSelfConMWh, OffshoreWindLt100MW_MWh,     
                                                         OffshoreWindGe100MW_MWh, OnshoreWindLt50kW_MWh, OnshoreWindGe50kW_MWh, 
                                                         HydroPowerMWh, SolarPowerLt10kW_MWh,SolarPowerGe10Lt40kW_MWh, SolarPowerGe40kW_MWh, 
