@@ -4,7 +4,9 @@ from src.ELT.transform import DataTransforming
 
 # api config
 dataset_name = "ProductionConsumptionSettlement"
-number_of_days = 365
+#number_of_days = 365
+year_start = 2022
+year_end = 2024
 
 # postgres config
 hostname = 'localhost'
@@ -18,7 +20,7 @@ dbt_project_name = 'danish_energy_consumption'
 
 if __name__ == "__main__":
     data_extract = DataExtraction()
-    data_path = data_extract.initiate_data_extraction(dataset_name, number_of_days)
+    data_path = data_extract.initiate_data_extraction(dataset_name, year_start, year_end)
 
     data_loading = DataLoading()
     data_loading.initiate_data_loading(data_path,hostname,database,username,pwd,port_id)

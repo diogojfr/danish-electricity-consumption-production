@@ -17,12 +17,13 @@ class DataExtraction:
     def __init__(self):
         self.extraction_config = DataExtractionConfig()
 
-    def initiate_data_extraction(self, dataset_name, number_days):
+    def initiate_data_extraction(self, dataset_name, year_start, year_end):
 
         logging.info('Entered the data extraction process...')
         
         try:
-            url = "https://api.energidataservice.dk/dataset/{}?limit={}".format(dataset_name,number_days*48)
+            #url = "https://api.energidataservice.dk/dataset/{}?limit={}".format(dataset_name,number_days*48)
+            url = "https://api.energidataservice.dk/dataset/{}?start={}-01-01T00:00&end={}-01-01T00:00".format(dataset_name,year_start, year_end+1)
 
             response = requests.get(url)
 
